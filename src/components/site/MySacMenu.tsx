@@ -31,7 +31,7 @@ export const sections: { title: string; rows: Row[] }[] = [
 
 const rowCls = "block px-4 py-1.5 text-[13px] font-medium transition-colors hover:bg-ink-foreground/5 hover:text-primary";
 
-export function MySacMenu({ open, onClose, top }: { open: boolean; onClose: () => void; hue?: number; top: string }) {
+export function MySacMenu({ open, onClose, top }: { open: boolean; onClose: () => void; top: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const hasCommunity = useHasCommunityProfile();
 
