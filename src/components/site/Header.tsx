@@ -1,3 +1,4 @@
+import { MyAvatar } from "@/components/site/MyAvatar";
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { MapPin, Menu, X, ArrowLeft, CalendarDays, Newspaper, Volleyball, Palette, Gamepad2, Users, User, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -29,7 +30,6 @@ const mobileNav = [
 ] as const;
 
 // Same colour the Explore avatar derives for "you", kept local so the header does not pull in Explore code.
-const YOU_HUE = [..."you"].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) % 360, 7);
 
 // Y-avatar hint: show in at most this many browser sessions, and never once Explore has been opened.
 const HINT_MAX_SESSIONS = 6;
@@ -143,15 +143,8 @@ export function Header() {
             </button>
             {(["mobile", "desktop"] as const).map((kind) => {
               const avatar = (
-                <span
-                  aria-hidden
-                  className={cn(
-                    "grid h-8 w-8 place-items-center rounded-full text-[13px] font-bold text-white transition-shadow",
-                    solid ? "ring-1 ring-foreground/15" : "ring-1 ring-white",
-                  )}
-                  style={{ background: `oklch(0.5 0.14 ${YOU_HUE})` }}
-                >
-                  Y
+                <span aria-hidden className={cn("grid rounded-full transition-shadow", solid ? "ring-1 ring-foreground/15" : "ring-1 ring-white")}>
+                  <MyAvatar size={32} />
                 </span>
               );
               const shell = kind === "mobile"

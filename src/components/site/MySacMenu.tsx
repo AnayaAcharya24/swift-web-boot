@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { openAccountEditProfile } from "./AccountEditProfile";
 import { openAccountInformation } from "./AccountInformation";
 import { cn } from "@/lib/utils";
-import { useProfilePhoto } from "@/lib/profile-photo";
+import { MyAvatar } from "./MyAvatar";
 import { useHasCommunityProfile } from "@/lib/community-profile";
 
 export type Row = { label: string; to?: string; tab?: string; community?: boolean; accountInfo?: boolean };
@@ -31,9 +31,8 @@ export const sections: { title: string; rows: Row[] }[] = [
 
 const rowCls = "block px-4 py-1.5 text-[13px] font-medium transition-colors hover:bg-ink-foreground/5 hover:text-primary";
 
-export function MySacMenu({ open, onClose, hue, top }: { open: boolean; onClose: () => void; hue: number; top: string }) {
+export function MySacMenu({ open, onClose, top }: { open: boolean; onClose: () => void; top: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const photo = useProfilePhoto();
   const hasCommunity = useHasCommunityProfile();
 
   useEffect(() => {
@@ -65,13 +64,7 @@ export function MySacMenu({ open, onClose, hue, top }: { open: boolean; onClose:
     >
       <div className="overflow-hidden rounded-[13px]"><div className="max-h-[calc(100dvh-6rem)] overflow-y-auto">
         <div className="flex items-center gap-3 border-b border-ink-border p-4">
-          {photo ? (
-            <img src={photo} alt="" className="h-12 w-12 rounded-full object-cover" />
-          ) : (
-            <span className="grid h-12 w-12 place-items-center rounded-full text-lg font-bold text-white" style={{ background: `oklch(0.5 0.14 ${hue})` }}>
-              Y
-            </span>
-          )}
+          <MyAvatar size={48} />
           <div className="min-w-0 flex-1">
             <div className="truncate font-semibold">You</div>
             <div className="truncate text-xs opacity-60">@you</div>

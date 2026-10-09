@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import { sections } from "@/components/site/MySacMenu";
-import { useProfilePhoto } from "@/lib/profile-photo";
+import { MyAvatar } from "@/components/site/MyAvatar";
 import { useHasCommunityProfile } from "@/lib/community-profile";
 import { openAccountEditProfile } from "@/components/site/AccountEditProfile";
 import { openAccountInformation } from "@/components/site/AccountInformation";
@@ -21,23 +21,15 @@ export const Route = createFileRoute("/my-sac")({
   component: MySacPage,
 });
 
-const YOU_HUE = [..."you"].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) % 360, 7);
 const rowCls = "flex min-h-12 w-full items-center justify-between px-4 text-left text-[15px] font-medium transition-colors active:bg-foreground/5 hover:text-primary";
 
 function MySacPage() {
-  const photo = useProfilePhoto();
   const hasCommunity = useHasCommunityProfile();
   return (
     <div className="min-h-[100svh] overflow-x-hidden bg-background px-4 pb-16 pt-20 text-foreground">
       <div className="mx-auto max-w-md">
         <div className="flex items-center gap-3 py-4">
-          {photo ? (
-            <img src={photo} alt="" className="h-14 w-14 rounded-full object-cover" />
-          ) : (
-            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full text-xl font-bold text-white" style={{ background: `oklch(0.5 0.14 ${YOU_HUE})` }}>
-              Y
-            </span>
-          )}
+          <MyAvatar size={56} />
           <div className="min-w-0 flex-1">
             <h1 className="truncate font-display text-2xl">You</h1>
             <div className="truncate text-sm text-muted-foreground">@you</div>
