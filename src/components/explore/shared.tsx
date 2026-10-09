@@ -1,3 +1,4 @@
+import { useMyProfile } from "@/lib/my-profile";
 import { useProfilePhoto } from "@/lib/profile-photo";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Heart, Send } from "lucide-react";
@@ -24,9 +25,11 @@ const hue = (s: string) => [...s].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) 
 
 /** Round avatar. `ring` shows the story ring (unseen = animated, seen = grey). */
 export function Avatar({ name, size = 36, ring = "none", pad = 2, self, src }: { name: string; size?: number; ring?: "unseen" | "seen" | "none"; pad?: number; self?: boolean; src?: string | null | undefined }) {
-  const myPhoto = useProfilePhoto();
+  const me = useMyProfile();
   const isMe = self ?? (name === "you" || name === "You");
-  const photo = src ?? (isMe ? myPhoto : null) ?? avatarFor(name);
+  const photo = src ?? (isMe ? me.photo : avatarFor(name));
+  const bg = isMe ? me.hue : hue(name);
+  const letter = isMe ? me.initial : name[0]?.toUpperCase();
   return (
     <span
       className={cn("explore-story-ring grid shrink-0 place-items-center", ring === "seen" && "is-seen", ring === "none" && "is-none")}
@@ -34,9 +37,9 @@ export function Avatar({ name, size = 36, ring = "none", pad = 2, self, src }: {
     >
       <span
         className="grid h-full w-full place-items-center overflow-hidden rounded-full font-bold text-white"
-        style={{ background: `oklch(0.5 0.14 ${hue(name)})`, border: ring === "none" ? 0 : `${pad}px solid var(--ink)`, fontSize: Math.max(11, size * 0.34) }}
+        style={{ background: `oklch(0.5 0.14 ${bg})`, border: ring === "none" ? 0 : `${pad}px solid var(--ink)`, fontSize: Math.max(11, size * 0.34) }}
       >
-        {photo ? <img src={photo} alt={name} className="h-full w-full rounded-full object-cover" /> : name[0]?.toUpperCase()}
+        {photo ? <img src={photo} alt={name} className="h-full w-full rounded-full object-cover" /> : letter}
       </span>
     </span>
   );
