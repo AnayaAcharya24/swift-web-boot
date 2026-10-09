@@ -1,5 +1,4 @@
 import { useMyProfile } from "@/lib/my-profile";
-import { useProfilePhoto } from "@/lib/profile-photo";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Heart, Send } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
